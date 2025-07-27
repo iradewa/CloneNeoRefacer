@@ -424,8 +424,8 @@ class Refacer:
                      pil_img.seek(page)
                      bgr_image = cv2.cvtColor(np.array(pil_img.convert('RGB')), cv2.COLOR_RGB2BGR)
                      refaced_bgr = self.process_first_face(bgr_image.copy()) if self.first_face else self.process_faces(bgr_image.copy())
-                     enhanced_bgr = enhance_image_memory(refaced_bgr)
-                     enhanced_rgb = cv2.cvtColor(enhanced_bgr, cv2.COLOR_BGR2RGB)
+                     # enhanced_bgr = enhance_image_memory(refaced_bgr) # Line commented out to disable enhancement
+                     enhanced_rgb = cv2.cvtColor(refaced_bgr, cv2.COLOR_BGR2RGB) # Use refaced_bgr directly
                      enhanced_pil = Image.fromarray(enhanced_rgb)
                      frames.append(enhanced_pil)
                      pbar.update(1)
@@ -446,7 +446,7 @@ class Refacer:
              filename = f"{original_name}_{timestamp}.jpg"
              output_path = os.path.join("output", filename)
              pil_img.save(output_path, format='JPEG', quality=100, subsampling=0)
-             output_path = enhance_image(output_path)
+             # output_path = enhance_image(output_path) # Line commented out to disable enhancement
              print(f"Saved refaced image to {output_path}")
              return output_path
 
